@@ -1,9 +1,17 @@
-import React, { useRef, useEffect, useState } from 'react';
-import { Image, StyleSheet, Animated, Text, Easing, TouchableOpacity, View } from 'react-native';
-import { useFonts } from 'expo-font';
-import { useNavigation } from '@react-navigation/native';
-import { ThemedView } from '@/components/ThemedView';
-import backgroundImage from '../../assets/images/bg.jpg';
+import React, { useRef, useEffect, useState } from "react";
+import {
+  Image,
+  StyleSheet,
+  Animated,
+  Text,
+  Easing,
+  TouchableOpacity,
+  View,
+} from "react-native";
+import { useFonts } from "expo-font";
+import { useNavigation } from "@react-navigation/native";
+import { ThemedView } from "@/components/ThemedView";
+import backgroundImage from "../../assets/images/bg.jpg";
 
 export default function HomeScreen() {
   const navigation = useNavigation();
@@ -14,7 +22,7 @@ export default function HomeScreen() {
 
   const sportsAnim = useRef(new Animated.Value(-200)).current; // Start off-screen to the left
   const fightAnim = useRef(new Animated.Value(200)).current; // Start off-screen to the right
- 
+
   const sportsOpacity = useRef(new Animated.Value(0)).current;
   const fightOpacity = useRef(new Animated.Value(0)).current;
 
@@ -64,30 +72,44 @@ export default function HomeScreen() {
     });
   }, [sportsAnim, fightAnim, sportsOpacity, fightOpacity]);
 
+  if (!fontsLoaded) {
+    return null;
+  }
+
   return (
     <ThemedView style={styles.container}>
       <Image source={backgroundImage} style={styles.backgroundImage} />
-      <View style={styles.titleContainer}>
-        <Animated.Text
-          style={[
-            styles.text,
-            { transform: [{ translateX: sportsAnim }], opacity: sportsOpacity },
-          ]}
-        >
-          FUTBOL
-        </Animated.Text>
-        <Animated.Text
-          style={[
-            styles.text,
-            { transform: [{ translateX: fightAnim }], opacity: fightOpacity },
-          ]}
-        >
-          FIGHT
-        </Animated.Text>
-      </View>
+      {fontsLoaded && (
+        <View style={styles.titleContainer}>
+          <Animated.Text
+            style={[
+              styles.text,
+              {
+                transform: [{ translateX: sportsAnim }],
+                opacity: sportsOpacity,
+              },
+            ]}
+          >
+            FUTBOL
+          </Animated.Text>
+          <Animated.Text
+            style={[
+              styles.text,
+              { transform: [{ translateX: fightAnim }], opacity: fightOpacity },
+            ]}
+          >
+            FIGHT
+          </Animated.Text>
+        </View>
+      )}
       {showPlayButton && (
-        <Animated.View style={[styles.playButtonContainer, { opacity: playButtonOpacity }]}>
-          <TouchableOpacity style={styles.playButton} onPress={() => navigation.navigate('picker')}>
+        <Animated.View
+          style={[styles.playButtonContainer, { opacity: playButtonOpacity }]}
+        >
+          <TouchableOpacity
+            style={styles.playButton}
+            onPress={() => navigation.navigate("picker")}
+          >
             <Text style={styles.playButtonText}>PLAY!</Text>
           </TouchableOpacity>
         </Animated.View>
@@ -99,40 +121,40 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
   },
   backgroundImage: {
-    position: 'absolute',
+    position: "absolute",
     top: 0,
     left: 0,
-    width: '100%',
-    height: '100%',
+    width: "100%",
+    height: "100%",
   },
   text: {
     fontSize: 64,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     marginBotton: 10,
-    color: 'white',
-    fontFamily: 'Bungee',
-    textShadowColor: 'rgba(0, 0, 0, 0.75)',
+    color: "white",
+    fontFamily: "Bungee",
+    textShadowColor: "rgba(0, 0, 0, 0.75)",
     textShadowOffset: { width: -5, height: 5 },
     textShadowRadius: 5,
   },
   playButton: {
-    backgroundColor: 'white',
+    backgroundColor: "white",
     padding: 10,
     borderRadius: 5,
   },
   playButtonText: {
-    color: 'black',
-    fontFamily: 'Bungee',
-    fontSize: 48
-  },  
+    color: "black",
+    fontFamily: "Bungee",
+    fontSize: 48,
+  },
   titleContainer: {
-    position: 'absolute',
-    top: '25%', // Adjust this value to position the text in the top third
-    alignItems: 'center',
+    position: "absolute",
+    top: "25%", // Adjust this value to position the text in the top third
+    alignItems: "center",
   },
   stepContainer: {
     gap: 8,
@@ -143,11 +165,11 @@ const styles = StyleSheet.create({
     width: 290,
     bottom: 0,
     left: 0,
-    position: 'absolute',
+    position: "absolute",
   },
   playButtonContainer: {
-    position: 'absolute',
+    position: "absolute",
     bottom: 100, // Adjust as needed
-    alignSelf: 'center',
+    alignSelf: "center",
   },
 });
