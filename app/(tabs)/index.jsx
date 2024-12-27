@@ -6,12 +6,15 @@ import {
   Text,
   Easing,
   TouchableOpacity,
+  Modal,
+  Button,
   View,
 } from "react-native";
 import { useFonts } from "expo-font";
 import { useNavigation } from "@react-navigation/native";
 import { ThemedView } from "@/components/ThemedView";
 import backgroundImage from "../../assets/images/bg.jpg";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function HomeScreen() {
   const navigation = useNavigation();
@@ -19,6 +22,19 @@ export default function HomeScreen() {
     SpaceMono: require("../../assets/fonts/SpaceMono-Regular.ttf"),
     Bungee: require("../../assets/fonts/BungeeInline-Regular.ttf"),
   });
+
+   const [showPopup, setShowPopup] = useState(true);
+
+   useEffect(() => {
+     const checkFirstLaunch = async () => {
+       const hasLaunched = await AsyncStorage.getItem("hasLaunched");
+       if (!hasLaunched) {
+         setShowPopup(true);
+         await AsyncStorage.setItem("hasLaunched", "true");
+       }
+     };
+     checkFirstLaunch();
+   }, []);
 
   const sportsAnim = useRef(new Animated.Value(-200)).current; // Start off-screen to the left
   const fightAnim = useRef(new Animated.Value(200)).current; // Start off-screen to the right
@@ -79,6 +95,25 @@ export default function HomeScreen() {
   return (
     <ThemedView style={styles.container}>
       <Image source={backgroundImage} style={styles.backgroundImage} />
+      <Modal visible={showPopup} transparent={true} animationType="slide">
+        <View style={styles.modalContainer}>
+          <View style={styles.modalContent}>
+            <Text style={styles.modalText}>
+              FUTBOL FIGHT! Pick a league or team, and a year or decade, and let
+              FUTBOL FIGHT come up with something for you and your friends to
+              argue about! It can tell you who is right, too! Now get ready to
+              have a
+            </Text>
+            <Text style={styles.bigText}>FUTBOL FIGHT!</Text>
+            <TouchableOpacity
+              onPress={() => setShowPopup(false)}
+              style={styles.modalButton}
+            >
+              <Text style={styles.modalButtonText}>Got it!</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
       {fontsLoaded && (
         <View style={styles.titleContainer}>
           <Animated.Text
@@ -141,10 +176,64 @@ const styles = StyleSheet.create({
     textShadowOffset: { width: -5, height: 5 },
     textShadowRadius: 5,
   },
+  bigText: {
+    fontSize: 32,
+    fontWeight: "bold",
+    marginBotton: 10,
+    color: "black",
+    fontFamily: "Bungee",
+    textShadowColor: "rgba(0, 0, 0, 0.75)",
+    textShadowOffset: { width: -5, height: 5 },
+    textShadowRadius: 5,
+    textAlign: "center",
+    marginBottom: 10,
+  },
   playButton: {
     backgroundColor: "white",
     padding: 10,
     borderRadius: 5,
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+  },
+  modalContent: {
+    backgroundColor: "white",
+    padding: 20,
+    borderRadius: 10,
+    alignItems: "center",
+    justifyContent: "center",
+    alignItems: "center",
+    borderWidth: 2,
+    borderColor: "#FFFFFF",
+    width: "60%",
+    height: "60%",
+    marginLeft: "10%",
+    marginRight: "10%",
+    marginTop: "10%",
+    marginBottom: "10%",
+  },
+  modalText: {
+    fontSize: 16,
+    marginBottom: 10,
+    textAlign: "center",
+    fontFamily: "Bungee",
+    color: "#000000",
+  },
+  modalButtonText: {
+    fontFamily: "Bungee",
+    color: "white",
+    fontSize: 16,
+  },
+  modalButton: {
+    backgroundColor: "black",
+    padding: 10,
+    borderRadius: 5,
+    fontFamily: "Bungee",
+    color: "black",
+    fontSize: 16,
   },
   playButtonText: {
     color: "black",

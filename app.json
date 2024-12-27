@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "FutbolFight",
+    "name": "FutbolFight!",
     "slug": "FutbolFight",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -8,6 +8,11 @@
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
+    "splash": {
+      "image": "./assets/images/splashscreen.png",
+      "resizeMode": "cover",
+      "backgroundColor": "#FFFFFF"
+    },
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.seamuffin.FutbolFight"
