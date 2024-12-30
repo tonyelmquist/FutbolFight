@@ -19,7 +19,7 @@ const leagues = futbolData.leagues.map((league) => league.name);
 const currentYear = new Date().getFullYear();
 const years = Array.from(
   { length: currentYear - 1920 + 1 },
-  (_, i) => currentYear - i,
+  (_, i) => `${currentYear - i}-${currentYear - i + 1}`,
 );
 const currentDecadeStart = Math.floor(currentYear / 10) * 10;
 const decades = Array.from(
@@ -47,12 +47,31 @@ export default function SportsPicker() {
   const getTopic = async (entry1, entry2, entry3, entry4) => {
     const randomString = Math.random().toString(36).substring(7);
 
-    const topicEndpoint = "futbolFight.php";
+    let topicEndpoint = "futbolFight"; 
 
+
+    if (entry2 === "All") {
+      entry2 = "";
+      topicEndpoint = "futbolFightLeague";
+
+    }
+
+    if (selectedYear) {
+      topicEndpoint = topicEndpoint + "Year.php";
+      entry3 = selectedYear;
+    }
+
+    if (selectedDecade) {
+      topicEndpoint = topicEndpoint + "Decade.php";
+      entry3 = selectedDecade;
+    }
+
+
+    const url = `https://rockpaperwhatever.com/${topicEndpoint}?param1=${entry1}&param2=${entry2}&param3=${entry3}&cacheBuster=${randomString}`;
+
+    
     try {
-      const response = await fetch(
-        `https://rockpaperwhatever.com/${topicEndpoint}?param1=${entry1}&param2=${entry2}&param3=${entry3}&param4=${entry4}&cacheBuster=${randomString}`,
-      );
+      const response = await fetch(url);
       const result = await response.text();
       setTopic(result);
 
@@ -251,7 +270,7 @@ export default function SportsPicker() {
                   selectedLeague,
                   selectedTeam,
                   selectedYear,
-                  selectedDecade,
+                  selectedDecade
                 )
               }
             >
@@ -262,19 +281,34 @@ export default function SportsPicker() {
       )}
       {gameStep === 5 && (
         <View style={styles.stepContainer}>
-          <Text style={styles.topicText}>{topic}</Text>
+          <ScrollView style={styles.verdictArea}>
+            <Text style={styles.verdictText}>{topic}</Text>
+          </ScrollView>
+
           <View style={styles.buttonRow}>
             <TouchableOpacity
               style={styles.button}
               onPress={() => getVerdict(topic)}
             >
-              <Text style={styles.buttonText}>Who is right?</Text>
+              <Text
+                style={styles.buttonText}
+                adjustsFontSizeToFit={true}
+                numberOfLines={2}
+              >
+                Who's right?
+              </Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.button}
               onPress={() => setGameStep(4)}
             >
-              <Text style={styles.buttonText}>Play again</Text>
+              <Text
+                style={styles.buttonText}
+                adjustsFontSizeToFit={true}
+                numberOfLines={2}
+              >
+                Play again
+              </Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -286,7 +320,13 @@ export default function SportsPicker() {
           </ScrollView>
           <View style={styles.buttonRow}>
             <TouchableOpacity style={styles.button} onPress={resetGame}>
-              <Text style={styles.buttonText}>Play again</Text>
+              <Text
+                style={styles.buttonText}
+                adjustsFontSizeToFit={true}
+                numberOfLines={2}
+              >
+                Play again
+              </Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -424,6 +464,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     color: "white",
     fontFamily: "Bungee",
+    textAlign: "center"
   },
   disabledButton: {
     backgroundColor: "gray",
