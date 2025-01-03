@@ -69,6 +69,7 @@ export default function SportsPicker() {
 
     const url = `https://rockpaperwhatever.com/${topicEndpoint}?param1=${entry1}&param2=${entry2}&param3=${entry3}&cacheBuster=${randomString}`;
 
+    console.log(url);
     
     try {
       const response = await fetch(url);
