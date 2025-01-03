@@ -17,7 +17,7 @@ SplashScreen.preventAutoHideAsync();
 export default function RootLayout() {
   const colorScheme = useColorScheme();
   const [loaded] = useFonts({
-    SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf"),
+    Bungee: require("../assets/fonts/BungeeInline-Regular.ttf"),
   });
 
   useEffect(() => {

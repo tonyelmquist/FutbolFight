@@ -19,22 +19,21 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 export default function HomeScreen() {
   const navigation = useNavigation();
   const [fontsLoaded] = useFonts({
-    SpaceMono: require("../../assets/fonts/SpaceMono-Regular.ttf"),
     Bungee: require("../../assets/fonts/BungeeInline-Regular.ttf"),
   });
 
-   const [showPopup, setShowPopup] = useState(true);
+  const [showPopup, setShowPopup] = useState(true);
 
-   useEffect(() => {
-     const checkFirstLaunch = async () => {
-       const hasLaunched = await AsyncStorage.getItem("hasLaunched");
-       if (!hasLaunched) {
-         setShowPopup(true);
-         await AsyncStorage.setItem("hasLaunched", "true");
-       }
-     };
-     checkFirstLaunch();
-   }, []);
+  useEffect(() => {
+    const checkFirstLaunch = async () => {
+      const hasLaunched = await AsyncStorage.getItem("hasLaunched");
+      if (!hasLaunched) {
+        setShowPopup(true);
+        await AsyncStorage.setItem("hasLaunched", "true");
+      }
+    };
+    checkFirstLaunch();
+  }, []);
 
   const sportsAnim = useRef(new Animated.Value(-200)).current; // Start off-screen to the left
   const fightAnim = useRef(new Animated.Value(200)).current; // Start off-screen to the right
