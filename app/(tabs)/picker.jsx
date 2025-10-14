@@ -13,6 +13,7 @@ import { ThemedView } from "@/components/ThemedView";
 import backgroundImage from "../../assets/images/bg.jpg";
 import futbolData from "../../data/futbol.json";
 import { useFocusEffect } from "@react-navigation/native";
+import { InterstitialAdManager } from "@/components/ads";
 
 const leagues = futbolData.leagues.map((league) => league.name);
 
@@ -263,14 +264,15 @@ export default function SportsPicker() {
           <View style={styles.buttonRow}>
             <TouchableOpacity
               style={styles.button}
-              onPress={() =>
+              onPress={() => {
+                InterstitialAdManager.show();
                 getTopic(
                   selectedLeague,
                   selectedTeam,
                   selectedYear,
                   selectedDecade
-                )
-              }
+                );
+              }}
             >
               <Text style={styles.buttonText}>FIGHT!</Text>
             </TouchableOpacity>
@@ -342,11 +344,15 @@ const styles = StyleSheet.create({
     height: "100%",
   },
   chosenText: {
-    fontSize: 48,
-    color: "white",
+    fontSize: 42,
+    color: "#FFF4E0",
     fontFamily: "Bungee",
     textAlign: "center",
-    marginTop: "10%",
+    marginTop: "5%",
+    textShadowColor: "#000000",
+    textShadowOffset: { width: -3, height: 3 },
+    textShadowRadius: 8,
+    paddingHorizontal: 20,
   },
   backgroundImage: {
     position: "absolute",
@@ -365,10 +371,13 @@ const styles = StyleSheet.create({
     marginBottom: "20%",
   },
   title: {
-    fontSize: 24,
-    color: "white",
+    fontSize: 28,
+    color: "#FFF4E0",
     fontFamily: "Bungee",
     marginVertical: 10,
+    textShadowColor: "#000000",
+    textShadowOffset: { width: -2, height: 2 },
+    textShadowRadius: 6,
   },
   verdictArea: {
     fontSize: 24,

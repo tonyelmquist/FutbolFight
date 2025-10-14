@@ -10,6 +10,8 @@ import { StatusBar } from "expo-status-bar";
 import { useEffect } from "react";
 import "react-native-reanimated";
 import { useColorScheme } from "@/hooks/useColorScheme";
+import mobileAds from 'react-native-google-mobile-ads';
+import { InterstitialAdManager, RewardedAdManager } from '@/components/ads';
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -25,6 +27,18 @@ export default function RootLayout() {
       SplashScreen.hideAsync();
     }
   }, [loaded]);
+
+  // Initialize AdMob
+  useEffect(() => {
+    mobileAds()
+      .initialize()
+      .then(adapterStatuses => {
+        console.log('AdMob initialized:', adapterStatuses);
+        // Preload interstitial and rewarded ads
+        InterstitialAdManager.load();
+        RewardedAdManager.load();
+      });
+  }, []);
 
   if (!loaded) {
     return null;

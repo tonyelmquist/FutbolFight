@@ -13,6 +13,7 @@ import {
 import { useFonts } from "expo-font";
 import { useNavigation } from "@react-navigation/native";
 import { ThemedView } from "@/components/ThemedView";
+import { BannerAd } from "@/components/ads";
 import backgroundImage from "../../assets/images/bg.jpg";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
@@ -148,6 +149,9 @@ export default function HomeScreen() {
           </TouchableOpacity>
         </Animated.View>
       )}
+      <View style={styles.adContainer}>
+        <BannerAd />
+      </View>
     </ThemedView>
   );
 }
@@ -169,11 +173,11 @@ const styles = StyleSheet.create({
     fontSize: 64,
     fontWeight: "bold",
     marginBotton: 10,
-    color: "white",
+    color: "#FFF4E0",
     fontFamily: "Bungee",
-    textShadowColor: "rgba(0, 0, 0, 0.75)",
-    textShadowOffset: { width: -5, height: 5 },
-    textShadowRadius: 5,
+    textShadowColor: "#000000",
+    textShadowOffset: { width: -3, height: 3 },
+    textShadowRadius: 8,
   },
   bigText: {
     fontSize: 32,
@@ -188,9 +192,11 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   playButton: {
-    backgroundColor: "white",
+    backgroundColor: "#FFF4E0",
     padding: 10,
     borderRadius: 5,
+    borderWidth: 3,
+    borderColor: "#003D29",
   },
   modalContainer: {
     flex: 1,
@@ -235,14 +241,15 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   playButtonText: {
-    color: "black",
+    color: "#003D29",
     fontFamily: "Bungee",
     fontSize: 48,
   },
   titleContainer: {
     position: "absolute",
-    top: "25%", // Adjust this value to position the text in the top third
+    top: "12%",
     alignItems: "center",
+    width: "100%",
   },
   stepContainer: {
     gap: 8,
@@ -257,7 +264,15 @@ const styles = StyleSheet.create({
   },
   playButtonContainer: {
     position: "absolute",
-    bottom: 100, // Adjust as needed
+    bottom: 160, // Adjust as needed
     alignSelf: "center",
+  },
+  adContainer: {
+    position: "absolute",
+    zIndex: 9999,
+    bottom: 94,
+    height: 50,
+    width: "100%",
+    alignItems: "center",
   },
 });
