@@ -5,7 +5,7 @@
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "myapp",
+    "scheme": "futbolfight",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "splash": {
@@ -44,7 +44,7 @@
         "react-native-google-mobile-ads",
         {
           "androidAppId": "ca-app-pub-3940256099942544~3347511713",
-          "iosAppId": "ca-app-pub-3940256099942544~1458002511"
+          "iosAppId": "ca-app-pub-5795876019651532~8785651691"
         }
       ]
     ],

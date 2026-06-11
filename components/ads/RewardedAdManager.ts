@@ -14,8 +14,8 @@ class RewardedAdManager {
 
     // Use test ad unit ID in development
     const adUnitId = __DEV__ ? TestIds.REWARDED : Platform.select({
-      ios: 'ca-app-pub-XXXXXXXXXXXXXXXX/YYYYYYYYYY', // Replace with your iOS ad unit ID
-      android: 'ca-app-pub-XXXXXXXXXXXXXXXX/YYYYYYYYYY', // Replace with your Android ad unit ID
+      ios: 'ca-app-pub-5795876019651532/7991500224', // ff_rewarded
+      android: TestIds.REWARDED, // No Android AdMob app yet — create one before shipping Android
     }) || TestIds.REWARDED;
 
     this.rewarded = RewardedAd.createForAdRequest(adUnitId, {

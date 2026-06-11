@@ -14,8 +14,8 @@ class InterstitialAdManager {
 
     // Use test ad unit ID in development
     const adUnitId = __DEV__ ? TestIds.INTERSTITIAL : Platform.select({
-      ios: 'ca-app-pub-XXXXXXXXXXXXXXXX/YYYYYYYYYY', // Replace with your iOS ad unit ID
-      android: 'ca-app-pub-XXXXXXXXXXXXXXXX/YYYYYYYYYY', // Replace with your Android ad unit ID
+      ios: 'ca-app-pub-5795876019651532/4768280946', // ff_interstitial
+      android: TestIds.INTERSTITIAL, // No Android AdMob app yet — create one before shipping Android
     }) || TestIds.INTERSTITIAL;
 
     this.interstitial = InterstitialAd.createForAdRequest(adUnitId, {

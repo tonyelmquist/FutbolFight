@@ -9,7 +9,9 @@ import { OpaqueColorValue, StyleProp, ViewStyle } from "react-native";
 
 // Add your SFSymbol to MaterialIcons mappings here.
 const MAPPING = {
-
+  "house.fill": "home",
+  soccerball: "sports-soccer",
+  "flame.fill": "local-fire-department",
 } as Partial<
   Record<
     import("expo-symbols").SymbolViewProps["name"],

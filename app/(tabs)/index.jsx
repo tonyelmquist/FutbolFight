@@ -14,7 +14,7 @@ import { useFonts } from "expo-font";
 import { useNavigation } from "@react-navigation/native";
 import { ThemedView } from "@/components/ThemedView";
 import { BannerAd } from "@/components/ads";
-import backgroundImage from "../../assets/images/bg.jpg";
+import backgroundImage from "../../assets/images/bg.png";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function HomeScreen() {

@@ -7,13 +7,17 @@ import {
   TouchableOpacity,
   Image,
   ScrollView,
+  Share,
 } from "react-native";
 import { useFonts } from "expo-font";
+import * as StoreReview from "expo-store-review";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { ThemedView } from "@/components/ThemedView";
-import backgroundImage from "../../assets/images/bg.jpg";
+import backgroundImage from "../../assets/images/bg.png";
 import futbolData from "../../data/futbol.json";
 import { useFocusEffect } from "@react-navigation/native";
 import { InterstitialAdManager } from "@/components/ads";
+import { APP_STORE_URL } from "@/constants/DailyDebates";
 
 const leagues = futbolData.leagues.map((league) => league.name);
 
@@ -88,6 +92,28 @@ export default function SportsPicker() {
     const result = await response.text();
     setVerdict(result);
     setGameStep(6);
+    maybeAskForReview();
+  };
+
+  // Ask for a rating right after the 3rd verdict — the moment of delight.
+  // iOS shows the prompt at most 3 times a year, so this only fires once.
+  const maybeAskForReview = async () => {
+    try {
+      const count =
+        parseInt((await AsyncStorage.getItem("verdictCount")) || "0", 10) + 1;
+      await AsyncStorage.setItem("verdictCount", count.toString());
+      if (count === 3 && (await StoreReview.hasAction())) {
+        StoreReview.requestReview();
+      }
+    } catch (error) {
+      // Never let the review prompt break the game flow.
+    }
+  };
+
+  const shareFight = (text) => {
+    Share.share({
+      message: `${text}\n\nSettle it in FutbolFight! ${APP_STORE_URL}`,
+    });
   };
 
   const resetGame = () => {
@@ -300,6 +326,18 @@ export default function SportsPicker() {
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.button}
+              onPress={() => shareFight(topic)}
+            >
+              <Text
+                style={styles.buttonText}
+                adjustsFontSizeToFit={true}
+                numberOfLines={2}
+              >
+                Share
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.button}
               onPress={() => setGameStep(4)}
             >
               <Text
@@ -319,6 +357,18 @@ export default function SportsPicker() {
             <Text style={styles.verdictText}>{verdict}</Text>
           </ScrollView>
           <View style={styles.buttonRow}>
+            <TouchableOpacity
+              style={styles.button}
+              onPress={() => shareFight(`${topic}\n\nThe verdict: ${verdict}`)}
+            >
+              <Text
+                style={styles.buttonText}
+                adjustsFontSizeToFit={true}
+                numberOfLines={2}
+              >
+                Share
+              </Text>
+            </TouchableOpacity>
             <TouchableOpacity style={styles.button} onPress={resetGame}>
               <Text
                 style={styles.buttonText}

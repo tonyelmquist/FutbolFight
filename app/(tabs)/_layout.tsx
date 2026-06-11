@@ -45,6 +45,15 @@ export default function TabLayout() {
           ),
         }}
       />
+      <Tabs.Screen
+        name="daily"
+        options={{
+          title: "Daily",
+          tabBarIcon: ({ color }) => (
+            <IconSymbol size={28} name="flame.fill" color={color} />
+          ),
+        }}
+      />
     </Tabs>
   );
 }
