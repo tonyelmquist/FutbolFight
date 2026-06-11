@@ -71,7 +71,7 @@ export default function SportsPicker() {
       entry3 = selectedDecade;
     }
 
-    const url = `https://rockpaperwhatever.com/${topicEndpoint}?param1=${entry1}&param2=${entry2}&param3=${entry3}&cacheBuster=${randomString}`;
+    const url = `https://futbolfight.kesug.com/${topicEndpoint}?param1=${entry1}&param2=${entry2}&param3=${entry3}&cacheBuster=${randomString}`;
     
     try {
       const response = await fetch(url);
@@ -87,7 +87,7 @@ export default function SportsPicker() {
   const getVerdict = async (topic) => {
     const verdictEndpoint = "futbolVerdict.php";
     const response = await fetch(
-      `https://rockpaperwhatever.com/${verdictEndpoint}?param1=${topic}`,
+      `https://futbolfight.kesug.com/${verdictEndpoint}?param1=${topic}`,
     );
     const result = await response.text();
     setVerdict(result);
