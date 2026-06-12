@@ -21,6 +21,9 @@ import { APP_STORE_URL } from "@/constants/DailyDebates";
 
 const leagues = futbolData.leagues.map((league) => league.name);
 
+// The tournament is happening now — no year/decade to pick, it IS the season.
+const WORLD_CUP = "2026 World Cup";
+
 const currentYear = new Date().getFullYear();
 const years = Array.from(
   { length: currentYear - 1920 + 1 },
@@ -221,7 +224,16 @@ export default function SportsPicker() {
                   ? styles.disabledButton
                   : styles.button
               }
-              onPress={() => setGameStep(3)}
+              onPress={() => {
+                if (selectedLeague === WORLD_CUP) {
+                  // Skip the year/decade step — go straight to the confirm screen.
+                  setSelectedYear(WORLD_CUP);
+                  setSelectedDecade(null);
+                  setGameStep(4);
+                } else {
+                  setGameStep(3);
+                }
+              }}
               disabled={!selectedLeague || !selectedTeam}
             >
               <Text style={styles.buttonText}>Next</Text>
@@ -284,9 +296,12 @@ export default function SportsPicker() {
           <Text style={styles.chosenText}>
             {selectedTeam === "All" ? selectedLeague : selectedTeam}
           </Text>
-          <Text style={styles.chosenText}>
-            {selectedYear || selectedDecade}
-          </Text>
+          {(selectedYear || selectedDecade) !==
+            (selectedTeam === "All" ? selectedLeague : selectedTeam) && (
+            <Text style={styles.chosenText}>
+              {selectedYear || selectedDecade}
+            </Text>
+          )}
           <View style={styles.buttonRow}>
             <TouchableOpacity
               style={styles.button}

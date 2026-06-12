@@ -1,5 +1,5 @@
 import { Platform } from 'react-native';
-import { RewardedAd, RewardedAdEventType, TestIds } from 'react-native-google-mobile-ads';
+import { AdEventType, RewardedAd, RewardedAdEventType, TestIds } from 'react-native-google-mobile-ads';
 
 class RewardedAdManager {
   private rewarded: RewardedAd | null = null;
@@ -33,13 +33,15 @@ class RewardedAdManager {
       // TODO: Handle reward logic here (e.g., give user coins, extra lives, etc.)
     });
 
-    this.rewarded.addAdEventListener(RewardedAdEventType.ERROR, (error) => {
+    // ERROR and CLOSED are generic AdEventType events — RewardedAdEventType
+    // only defines LOADED and EARNED_REWARD.
+    this.rewarded.addAdEventListener(AdEventType.ERROR, (error) => {
       this.isLoaded = false;
       this.isLoading = false;
       console.error('Rewarded ad error:', error);
     });
 
-    this.rewarded.addAdEventListener(RewardedAdEventType.CLOSED, () => {
+    this.rewarded.addAdEventListener(AdEventType.CLOSED, () => {
       this.isLoaded = false;
       this.load(); // Preload the next ad
     });

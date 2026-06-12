@@ -7,7 +7,6 @@
     "icon": "./assets/images/icon.png",
     "scheme": "futbolfight",
     "userInterfaceStyle": "automatic",
-    "newArchEnabled": true,
     "splash": {
       "image": "./assets/images/splashscreen.png",
       "resizeMode": "cover",
@@ -46,7 +45,9 @@
           "androidAppId": "ca-app-pub-3940256099942544~3347511713",
           "iosAppId": "ca-app-pub-5795876019651532~8785651691"
         }
-      ]
+      ],
+      "expo-font",
+      "expo-web-browser"
     ],
     "experiments": {
       "typedRoutes": true
